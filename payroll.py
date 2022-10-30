@@ -7,7 +7,8 @@ def pay(hours, rate):
      if hours <= 40:
         return hours * rate
      if hours > 40:
-        return ((hours-40) * rate * 1.5) + rate * 40
+        return ((hours-40) * rate * 1.5) + rate * 40  
+
 
 print('Welcome to Payroll Calculator')
 
@@ -35,24 +36,40 @@ while True:
     except ValueError:
         print('Invalid value, please enter a number')
 
+
+#Define OT & regular
+n = hours - 40
+if n > 0:
+    othours = n
+else:
+    othours = 0
+
+otpayrate = rate * 1.5
+
+def otpay(othours, otpayrate):
+    return float(othours * otpayrate)
+
+reghours = hours - othours
+
+def regpay(reghours, rate):
+    return float(reghours * rate)  
+
+        
+#Math        
 grosspay = pay(hours, rate)
 fedtax = caltax(grosspay, .15)
 stattax = caltax(grosspay, .1)
 fica = caltax(grosspay, .02)
 netpay = grosspay - fedtax - stattax - fica
 
-#need to figure out how to make this conditional so it doesn't give negative if no OT
-otpay = (hours - 40) * rate * 1.5
 
-#this will only work when there is OT 
-regpay = grosspay - otpay
 
 #Print everything
 print('Employee name: ' + employee_name)
 print('Hourly rate: $' + str(rate))
 print('Hours worked: ' + str(hours))
-print('Regular pay: $' + str(regpay))
-print('Overtime pay: $' + str(otpay))
+print('Regular pay: $', regpay(reghours, rate))
+print('Overtime pay: $', otpay(othours, otpayrate))
 print('Gross pay: $' + str(grosspay))
 print('Federal tax: $' + str(fedtax))
 print('State tax: $' + str(stattax))
