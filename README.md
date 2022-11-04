@@ -1,2 +1,0 @@
-# scaling-octo-waffle
-Generation 
